@@ -1,0 +1,11 @@
+propel:
+  _attributes:    { package: plugins.sfPropelActAsCountableBehaviorPlugin.lib.model }
+
+  sf_counter:
+    _attributes:      { phpName: sfCounter, package: plugins.sfPropelActAsCountableBehaviorPlugin.lib.model }
+    id:               { phpName: ID, type: integer, required: true, primaryKey: true, autoincrement: true }
+    countable_model:  varchar(30)
+    countable_id:     integer
+    counter:          { phpName: COUNTER, type: integer, default: 0 }
+    _indexes:
+      countable:      [countable_model, countable_id]

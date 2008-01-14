@@ -1,0 +1,146 @@
+= sfPropelActAsCountableBehaviorPlugin =
+
+== Introduction ==
+This behavior permits to attach counters to Propel objects. It includes a 
+sample "Viewed n times" module, that permits to display how many times an 
+object was viewed. This is mostly usefull in a blog or a Content Management 
+System, for displaying the number of times an article has been read.
+
+== Features ==
+
+ * counters attachement
+ * selection of the most counted objects
+ * sample module "Viewed n times", to be included in pages displaying propel objects.
+ * unit-tested
+
+== Philosophy of the stuff ==
+
+ * countable objects must have a primary key
+ * there can be only one counter by object
+
+== Get it installed ==
+
+ * go to your project's root
+
+ * Install the plugin:
+   {{{
+     ./symfony plugin-install http://plugins.symfony-project.com/sfPropelActAsCountableBehaviorPlugin
+   }}}
+
+ * if not already done, enabled behaviors in config/propel.ini:
+   {{{
+     propel.builder.addBehaviors = true
+   }}}
+
+ * edit the classes that you want to make countable. For instance, for lib/model/Post.php:
+   {{{
+   #!php
+   <?php
+     class Post extends BasePost
+     {
+     }
+
+     sfPropelBehavior::add('Post', array('sfPropelActAsCountableBehavior'));
+   }}}
+
+ * rebuild the model:
+   {{{
+     ./symfony propel-build-all
+   }}}
+
+ * clear cache:
+   {{{
+     ./symfony cc
+   }}}
+
+
+== Usage ==
+
+=== Attaching tags to a taggable object ===
+Consider a Propel "Post" class:
+
+{{{
+#!php
+<?php
+class Post extends BasePost
+{
+}
+
+sfPropelBehavior::add('Post', array('sfPropelActAsCountableBehavior'));
+}}}
+
+When the sfPropelActAsCountableBehavior is applied to the Post class, that 
+class automagically gets countgable. This means that it is now possible to use 
+the methods {{{getCounter()}}}, {{{incrementCounter()}}}, 
+{{{decrementCounter()}}}, {{{resetCounter()}}}, etc.:
+{{{
+#!php
+<?php
+$post = new Post();
+$post->save(); // an object must be saved before the behavior is employed.
+
+$post->incrementCounter();
+$post->incrementCounter();
+$post->incrementCounter();
+echo $post->getCounter();  // displays '3'
+
+$post->decrementCounter();
+echo $post->getCounter();  // displays '2'
+
+$post->resetCounter();
+echo $post->getCounter();  // displays '0'
+}}}
+
+=== Lists of countable objects ===
+The plugin also proposes methods and helpers for retrieving the list of the most 
+counted objects:
+{{{
+#!php
+<?php
+// gets the popular tags
+$objects = sfCounterPeer::getMostCounted();
+}}}
+
+{{{getMostCounted()}}} accepts several parameters, that permit to specialize 
+this list (list of the most counted Post objects, for instance). The default 
+size of this list is 10 items, but this value might be tweaked in app.yml:
+{{{
+all:
+  sfPropelActAsCountableBehaviorPlugin:
+    limit:   50
+}}}
+
+== API ==
+The behavior implement the following methods:
+ * {{{decrementCounter()}}}: decrements the value of the counter
+ * {{{forceCounter($value)}}}: forces the value of the counter to a certain value. This value won't be saved until you explicitely call the {{{saveCounter()}}} method.
+ * {{{getCounter()}}}: returns the value of the counter
+ * {{{incrementCounter()}}}: increments the value of the counter 
+ * {{{resetCounter()}}}: resets the value of the counter, ie. sets it to 0.
+ * {{{saveCounter()}}}: saves the current value of the counter.
+
+== Unit testing ==
+The plugin is unit-tested. The tests are located in test/unit/sfPropelActAsCountableBehaviorTest.php. 
+If you want to run them:
+ * install the plugin
+ * configure a model for using it, for instance "Post"
+ * edit the test file file and modify line 3:
+   {{{
+     define('TEST_CLASS', 'Post');
+   }}}
+ * run the tests:
+   {{{
+     php ./plugins/sfPropelActAsCountableBehaviorPlugin/test/unit/sfPropelActAsCountableBehaviorTest.php
+   }}}
+
+== License and credits ==
+This plugin is licensed under the MIT license and maintained by [http://lacot.org/ Xavier Lacot] 
+<xavier@lacot.org>. External contributions and comments are welcome !
+
+== Roadmap ==
+ * implement namespaces
+
+== Changelog ==
+
+=== version 0.1 - 2008-01-14 ===
+Initial public release.

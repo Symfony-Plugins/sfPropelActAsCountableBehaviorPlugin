@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>sfPropelActAsCountableBehaviorPlugin</name>
+ <channel>pear.symfony-project.com</channel>
+ <summary>Propel countable behavior</summary>
+ <description>This behavior permits to attach counters to Propel objects. It includes a sample "Viewed n times" module, that permits to display how many times an object was viewed. This is mostly usefull in a blog or a Content Management System, for displaying the number of times an article has been read.</description>
+ <lead>
+  <name>Xavier Lacot</name>
+  <user>xavier</user>
+  <email>xavier@lacot.org</email>
+  <active>yes</active>
+ </lead>
+ <date>2008-01-14</date>
+ <time>14:55:25</time>
+ <version>
+  <release>0.1.0</release>
+  <api>0.1.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.symfony-project.com/license">MIT license</license>
+ <notes>Initial public release</notes>
+ <contents>
+  <dir name="/">
+   <dir name="config">
+    <file name="config.php" role="data" />
+    <file name="schema.yml" role="data" />
+   </dir>
+   <dir name="lib">
+    <dir name="model">
+     <dir name="map" />
+     <dir name="om" />
+     <file name="sfCounter.php" role="data" />
+     <file name="sfCounterPeer.php" role="data" />
+    </dir>
+     <file name="sfPropelActAsCountableBehavior.class.php" role="data" />
+     <file name="sfPropelActAsCountableToolkit.class.php" role="data" />
+   </dir>
+   <dir name="modules">
+    <dir name="sfCounter">
+     <dir name="actions">
+	    <file name="actions.class.php" role="data" />
+	    <file name="components.class.php" role="data" />
+     </dir>
+     <dir name="config" />
+     <dir name="i18n">
+	    <file name="messages.fr.xml" role="data" />
+	   </dir>
+     <dir name="lib">
+	    <file name="BasesfCounterActions.class.php" role="data" />
+	    <file name="BasesfCounterComponents.class.php" role="data" />
+     </dir>
+     <dir name="templates">
+	    <file name="_counter.php" role="data" />
+	    <file name="incrementCounterSuccess.php" role="data" />
+	    <file name="mostViewedSuccess.php" role="data" />
+     </dir>
+     <dir name="validate" />
+    </dir>
+   </dir>
+   <dir name="test">
+    <dir name="unit">
+     <!-- unit tests -->
+     <file name="sfPropelActAsCountableBehaviorTest.php" role="data" />
+    </dir>
+   </dir>
+   <file name="README" role="data" />
+   <file name="LICENSE" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.1</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.0.0</min>
+    <max>1.1.0</max>
+    <exclude>1.1.0</exclude>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.1.0</release>
+    <api>0.1.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2008-01-14</date>
+   <license uri="http://www.symfony-project.com/license">MIT license</license>
+   <notes>Initial public release</notes>
+  </release>
+ </changelog>
+</package>

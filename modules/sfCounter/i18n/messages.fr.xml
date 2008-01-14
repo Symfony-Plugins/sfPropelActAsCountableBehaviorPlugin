@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en_US" datatype="plaintext">
+    <body>
+      <trans-unit>
+        <source>[0]Never viewed|[1]Viewed one time|(1,+Inf]Viewed %1% times</source>
+        <target>[0]Jamais vu|[1]Vu une fois|(1,+Inf]Vu %1% fois</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
