@@ -110,6 +110,22 @@ all:
     limit:   50
 }}}
 
+This method is resource intensive, so if you want to manipulate your countable objects more easily, for instance to achieve a sort by number of counts in a single query, you should add a `nb_sf_counts` column to your object to keep the number of counts. The behavior will keep this column up to date, provided that you declare it in the `app.yml`:
+{{{
+all:
+  sfPropelActAsCountableBehaviorPlugin:
+    count:
+      enabled: true           # whether or not the method must be called for updating the count
+      method:  setNbSfCounts  # name of the method to call in order to update the count. If you call the comments count column "gerard", simply put "setGerard" on this line
+}}}
+
+With this trick, sorting objects by their counter value is rather straightforward:
+{{{
+$c = new Criteria();
+$c->addDescendingOrderByColumn(PostPeer::NB_SF_COUNTS);
+$posts = PostPeer::doSelect($c);
+}}}
+
 == API ==
 The behavior implement the following methods:
  * {{{decrementCounter()}}}: decrements the value of the counter
@@ -141,6 +157,10 @@ This plugin is licensed under the MIT license and maintained by [http://lacot.or
  * implement namespaces
 
 == Changelog ==
+
+=== Trunk - 2008-02-20 ===
+
+ * francois: Added automatic update of `nb_sf_counts` columns
 
 === version 0.1 - 2008-01-14 ===
 Initial public release.

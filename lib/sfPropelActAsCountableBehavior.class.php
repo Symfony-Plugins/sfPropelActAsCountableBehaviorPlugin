@@ -171,5 +171,15 @@ class sfPropelActAsCountableBehavior
     }
 
     $object->_counter->save();
+    
+    $count_options = array_merge(array('method'    => 'setNbSfCounts',
+                                       'enabled'   => true),
+                                 sfConfig::get('app_sfPropelActAsCountableBehaviorPlugin_count', array()));
+
+    if ($count_options['enabled'] && is_callable(get_class($object), $count_options['method']))
+    {
+      call_user_func(array($object, $count_options['method']), $object->_counter->getCounter());
+      $object->save();
+    }
   }
 }
